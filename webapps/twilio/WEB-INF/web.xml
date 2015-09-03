@@ -9,10 +9,20 @@
         <servlet-name>AnsweringMachine</servlet-name>
         <servlet-class>com.twilio.AnsweringMachine</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>CallRecorder</servlet-name>
+        <servlet-class>com.twilio.CallRecorder</servlet-class>
+    </servlet>
  
     <servlet-mapping>
         <servlet-name>AnsweringMachine</servlet-name>
-        <url-pattern>/answeringmachine</url-pattern>
+        <url-pattern>/handle-call</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CallRecorder</servlet-name>
+        <url-pattern>/handle-recording</url-pattern>
     </servlet-mapping>
  
 </web-app>

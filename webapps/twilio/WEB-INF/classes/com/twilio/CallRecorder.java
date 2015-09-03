@@ -23,30 +23,37 @@ import com.twilio.sdk.verbs.Say;
 
 public class AnsweringMachine extends HttpServlet {
 
+    public static final String ACCOUNT_SID = "";
+    public static final String AUTH_TOKEN = "";
     public static final String YOUR_NUMBER = "";
     public static final String TWILIO_NUMBER = "";
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        TwiMLResponse twiml = new TwiMLResponse();
-
-        Say pleaseLeaveMessage = new Say("Please leave your message for Brodan now.");
-        // Record the caller's voice.
-        Record record = new Record();
-        record.setMaxLength(60);
-        record.setTimeout(5);
-        record.setAction("/handle-recording");
-        record.setPlayBeep(true);
-
-        try {
-            twiml.append(pleaseLeaveMessage);
-            twiml.append(record);
-        } catch (TwiMLException e) {
-            e.printStackTrace();
-        }
+        
 
         // Respond with TwiML
         response.setContentType("application/xml");
         response.getWriter().print(twiml.toXML()); 
 
+        //sendSMS();
+    }
+
+    public void sendSMS() {
+        try {
+            TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
+
+            // Build a filter for the MessageList
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("Body", "Jenny please?! I love you <3"));
+            params.add(new BasicNameValuePair("To", YOUR_NUMBER));
+            params.add(new BasicNameValuePair("From", TWILIO_NUMBER));
+         
+            MessageFactory messageFactory = client.getAccount().getMessageFactory();
+            Message message = messageFactory.create(params);
+            System.out.println(message.getSid());
+        }
+        catch (TwilioRestException e) {
+            System.out.println(e.getErrorMessage());
+        }
     }
 }
