@@ -16,20 +16,14 @@ import com.twilio.sdk.resource.instance.Message;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-
 public class CallRecorder extends HttpServlet {
 
     public static final String ACCOUNT_SID = "";
     public static final String AUTH_TOKEN = "";
-    public static final String YOUR_NUMBER = "";
-    public static final String TWILIO_NUMBER = "";
+    public static final String YOUR_NUMBER = "+";
+    public static final String TWILIO_NUMBER = "+";
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        
-        //System.out.println();
-
-        //response.setContentType("application/xml");
-        //response.getWriter().print(twiml.toXML()); 
 
         sendSMS(request.getParameter("From"), request.getParameter("RecordingUrl"));
     }
